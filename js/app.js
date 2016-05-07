@@ -1,5 +1,8 @@
 var secretNum,
-	guessCount;
+	guessCount,
+  lastDiff;
+
+var prevGuesses = [];
 
 $(document).ready(function(){
 
@@ -24,7 +27,9 @@ $(document).ready(function(){
   	});
 
   	/*---Custom Functions---*/
-	function numGen(){
+
+
+	  function numGen(){
 		var num = Math.random() * 100;
 		num = Math.round(num);
 		return num;
@@ -39,9 +44,14 @@ $(document).ready(function(){
   		else if (guess > 100) {
   			alert("The number you entered was over 100. Please enter a number between 1 and 100.");
   		}
+      else if ($.inArray(guess, prevGuesses) != -1) {
+        $('#feedback').text('You already guessed ' + guess + '.');
+      }
   		else {
+        prevGuesses.push(guess);
   			guessCount++;
-  			var diff = Math.abs(guess - secretNum);
+        var diff = Math.abs(guess - secretNum);
+
   			if (diff === 0) {
   				$('#feedback').text("You won in " + guessCount + " guesses!");
   				$('#guessButton').prop('disabled', true);

@@ -26,6 +26,13 @@ $(document).ready(function(){
   		newGame();
   	});
 
+    $('#userGuess').on('keypress', function(e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        feedback();
+      }
+    });
+
   	/*---Custom Functions---*/
 
 
@@ -44,7 +51,7 @@ $(document).ready(function(){
   		else if (guess > 100) {
   			alert("The number you entered was over 100. Please enter a number between 1 and 100.");
   		}
-      else if ($.inArray(guess, prevGuesses) != -1) {
+      else if ($.inArray(guess, prevGuesses) !== -1) {
         $('#feedback').text('You already guessed ' + guess + '.');
       }
   		else {
